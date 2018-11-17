@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // Instruments
-import avatar from 'theme/assets/lisa';
+
 import Styles from './styles.m.css';
 
 // Components
@@ -11,13 +11,19 @@ import Post from '../Post';
 
 
 
+
 export default class Feed extends Component{
     render(){
+    	const {
+            currentUserFirstName,
+            currentUserLastName,
+            avatar
+        } = this.props;
         return(
             <section className = { Styles.feed }>
-                <StatusBar/>
-                <Composer/>
-                <Post />
+                <StatusBar { ...this.props }/>
+                <Composer { ...this.props }/>
+                <Post {...this.props}/>
             </section>
             
         )
