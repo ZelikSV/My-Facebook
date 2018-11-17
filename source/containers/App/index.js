@@ -1,6 +1,8 @@
 // Core
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
+import { Provider } from '../../components/HOC/withProfile';
+
 
 import avatar from 'theme/assets/lisa';
 // Components
@@ -15,9 +17,9 @@ export default class App extends Component {
     currentUserLastName: 'Simpson'
 }
         return (
-           <>
-            <Feed {...options} />  
-           </>
+           <Provider value = { options }>
+            <Feed />
+           </Provider>
         );
     }
 }

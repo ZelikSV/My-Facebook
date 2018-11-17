@@ -10,22 +10,15 @@ import Composer from '../Composer';
 import Post from '../Post';
 
 
-
-
 export default class Feed extends Component{
     render(){
-    	const {
-            currentUserFirstName,
-            currentUserLastName,
-            avatar
-        } = this.props;
+
         return(
-            <section className = { Styles.feed }>
-                <StatusBar { ...this.props }/>
-                <Composer { ...this.props }/>
-                <Post {...this.props}/>
-            </section>
-            
+                <section className = { Styles.feed }>
+                    <StatusBar />
+                    <Composer />
+                    <Post />
+                </section>
         )
     }
 }
