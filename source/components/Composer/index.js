@@ -4,10 +4,9 @@ import { Consumer } from '../HOC/withProfile';
 import Styles from './styles.m.css';
 
 
-export default class Composer extends Component{
-    render(){
-
-        return(
+export default class Composer extends Component {
+    render () {
+        return (
             <Consumer>
                 {
                     (context)=>(
@@ -15,14 +14,12 @@ export default class Composer extends Component{
                             <img src = {  context.avatar }/>
                             <form>
                                 <textarea placeholder = { `Whats your problem ${ context.currentUserFirstName}?` } />
-                                <input type = 'submit' value = 'Post' />
+                                <input type = 'submit' value = "Post" />
                             </form>
                         </section>
                     )
                 }
             </Consumer>
-
-            
-        )
+        );
     }
 }

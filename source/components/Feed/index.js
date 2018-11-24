@@ -10,15 +10,14 @@ import Composer from '../Composer';
 import Post from '../Post';
 
 
-export default class Feed extends Component{
-    render(){
-
-        return(
-                <section className = { Styles.feed }>
-                    <StatusBar />
-                    <Composer />
-                    <Post />
-                </section>
-        )
+export default class Feed extends Component {
+    render () {
+        return (
+            <section className = { Styles.feed } >
+                <StatusBar />
+                <Composer />
+                <Post />
+            </section>
+        );
     }
 }
