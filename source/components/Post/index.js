@@ -8,6 +8,8 @@ import moment from 'moment';
 
 export default class Post extends Component{
     render(){
+        const { comment } = this.props;
+
         return(
          <Consumer>
              {
@@ -17,7 +19,7 @@ export default class Post extends Component{
                              <img src={ context.avatar }/>
                              <a>{` ${ context.currentUserFirstName } ${ context.currentUserLastName } `}</a>
                              <time>{moment().format('MMMM D h:mm:ss a')}</time>
-                             <p>How are you Lisa?</p>
+                             <p>{ comment }</p>
                          </section>
                      )
 
