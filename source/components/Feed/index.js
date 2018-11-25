@@ -19,6 +19,7 @@ export default class Feed extends Component {
         this._createPost = this._createPost.bind(this);
         this._setPostFetchingState = this._setPostFetchingState.bind(this);
         this._likePost = this._likePost.bind(this);
+        this._removePost = this._removePost.bind(this);
     }
 
         state = {
@@ -37,7 +38,7 @@ export default class Feed extends Component {
             this._setPostFetchingState(true);
             const post = {
                 id:      getUniqueID(),
-                created: moment.now(),
+                created: moment.utc(),
                 comment,
                 likes:   [],
             };
@@ -54,8 +55,9 @@ export default class Feed extends Component {
             const { currentUserFirstName, currentUserLastName } = this.props;
 
             this._setPostFetchingState(true);
-            await delay(1200);
-            const newPosts = this.state.posts.map((post) => {
+            await delay(500);
+            const { posts } = this.state;
+            const newPosts = posts.map((post) => {
                 if (post.id === id) {
                     return {
                         ...post,
@@ -78,6 +80,22 @@ export default class Feed extends Component {
             });
         }
 
+        async _removePost (id) {
+            this._setPostFetchingState(true);
+            await delay(500);
+
+            const { posts } = this.state;
+
+            const postsAfterRemoves = posts.filter((item) => {
+                return item.id !== id;
+            });
+
+            this.setState({
+                posts:   postsAfterRemoves,
+                posting: false,
+            });
+        }
+
         render () {
             const { posts, posting } = this.state;
             const postJSX = posts.map((post) => {
@@ -86,6 +104,7 @@ export default class Feed extends Component {
                         key = { post.id }
                         { ...post }
                         _likePost = { this._likePost }
+                        _removePost = { this._removePost }
                     />
                 );
             });
