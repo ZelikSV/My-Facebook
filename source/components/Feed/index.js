@@ -24,8 +24,8 @@ export default class Feed extends Component {
 
         state = {
             posts: [
-                { id: '123', comment: 'Hi there Bart!', created: 1523708450, likes: [] },
-                { id: '456', comment: 'I m fine. And how are you?', created: 1523708756, likes: [] },
+                { id: '123', comment: 'Hi there Bart!', created: { month: 3, day: 5, hour: 4, minute: 10, second: 3 }, likes: [] },
+                { id: '456', comment: 'I m fine. And how are you?', created: { month: 2, day: 15, hour: 1, minute: 10, second: 3 }, likes: [] },
             ],
             posting: false,
         };

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Consumer } from '../HOC/withProfile';
 import Like from '../Like';
-import { func, string, number, array } from 'prop-types';
+import { func, string, object, array } from 'prop-types';
 
 // Instruments
 import Styles from './styles.m.css';
@@ -11,7 +11,7 @@ import moment from 'moment';
 export default class Post extends Component {
     static propTypes = {
         comment:     string.isRequired,
-        created:     number.isRequired,
+        created:     object.isRequired,
         _likePost:   func.isRequired,
         _removePost: func.isRequired,
         likes:       array.isRequired,
@@ -44,7 +44,7 @@ export default class Post extends Component {
                             />
                             <img src = { context.avatar }/>
                             <a>{` ${ context.currentUserFirstName } ${context.currentUserLastName } `}</a>
-                            <time>{moment.unix(created).format('MMMM D h:mm:ssa')}</time>
+                            <time>{moment(created).format('MMMM D h:mm:ssa')}</time>
                             <p>{ comment }</p>
                             <Like
                                 _likePost = { _likePost }
