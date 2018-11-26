@@ -27,11 +27,11 @@ export default class Feed extends Component {
                 { id: '123', comment: 'Hi there Bart!', created: { month: 3, day: 5, hour: 4, minute: 10, second: 3 }, likes: [] },
                 { id: '456', comment: 'I m fine. And how are you?', created: { month: 2, day: 15, hour: 1, minute: 10, second: 3 }, likes: [] },
             ],
-            posting: false,
+            isSpinning: false,
         };
 
         _setPostFetchingState (state) {
-            this.setState({ posting: state });
+            this.setState({ isSpinning: state });
         }
 
         async  _createPost (comment) {
@@ -46,8 +46,8 @@ export default class Feed extends Component {
             await delay(1500);
 
             this.setState(({ posts }) => ({
-                posts:   [ post, ...posts ],
-                posting: false,
+                posts:      [ post, ...posts ],
+                isSpinning: false,
             }));
         }
 
@@ -75,8 +75,8 @@ export default class Feed extends Component {
             });
 
             this.setState({
-                posts:   newPosts,
-                posting: false,
+                posts:      newPosts,
+                isSpinning: false,
             });
         }
 
@@ -91,13 +91,13 @@ export default class Feed extends Component {
             });
 
             this.setState({
-                posts:   postsAfterRemoves,
-                posting: false,
+                posts:      postsAfterRemoves,
+                isSpinning: false,
             });
         }
 
         render () {
-            const { posts, posting } = this.state;
+            const { posts, isSpinning } = this.state;
             const postJSX = posts.map((post) => {
                 return (
                     <Post
@@ -111,7 +111,7 @@ export default class Feed extends Component {
 
             return (
                 <section className = { Styles.feed }>
-                    <Spinner isSpinning = { posting }/>
+                    <Spinner isSpinning = { isSpinning }/>
                     <StatusBar />
                     <Composer _createPost = { this._createPost } />
                     { postJSX }
