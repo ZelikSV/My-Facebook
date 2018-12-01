@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { Consumer } from '../HOC/withProfile';
+import { withProfile } from '../HOC/withProfile';
 import Like from '../Like';
 import { func, string, object, array } from 'prop-types';
 
@@ -8,7 +8,8 @@ import { func, string, object, array } from 'prop-types';
 import Styles from './styles.m.css';
 import moment from 'moment';
 
-export default class Post extends Component {
+@withProfile
+export  default class Post extends Component {
     static propTypes = {
         comment:     string.isRequired,
         created:     object.isRequired,
@@ -18,45 +19,30 @@ export default class Post extends Component {
         id:          string.isRequired,
     };
 
-    constructor() {
-        super();
-
-        this._removePost = this._removePost.bind(this);
-    }
-
-    _removePost () {
+    _removePost = () => {
         const { id } = this.props;
         this.props._removePost(id);
     }
 
     render () {
-        const { comment, created, id, likes, _likePost } = this.props;
+        const { comment, created, id, likes, _likePost, avatar, currentUserFirstName, currentUserLastName } = this.props;
 
         return (
-            <Consumer>
-                {
-                    (context) => (
-                        <section className = { Styles.post } >
-                            <span
-                                className = { Styles.cross }
-                                onClick = { this._removePost }
-
-                            />
-                            <img src = { context.avatar }/>
-                            <a>{` ${ context.currentUserFirstName } ${context.currentUserLastName } `}</a>
-                            <time>{moment(created).format('MMMM D h:mm:ssa')}</time>
-                            <p>{ comment }</p>
-                            <Like
-                                _likePost = { _likePost }
-                                id = { id }
-                                likes = { likes }
-                                { ...context }
-                            />
-                        </section>
-                    )
-                }
-            </Consumer>
-
-        );
+            <section className = { Styles.post } >
+                <span
+                    className = { Styles.cross }
+                    onClick = { this._removePost }
+                />
+                <img src = { avatar }/>
+                <a>{` ${ currentUserFirstName } ${ currentUserLastName } `}</a>
+                <time>{moment(created).format('MMMM D h:mm:ssa')}</time>
+                <p>{ comment }</p>
+                <Like
+                    _likePost = { _likePost }
+                    id = { id }
+                    likes = { likes }
+                />
+            </section>
+        )
     }
 }
