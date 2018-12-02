@@ -7,19 +7,25 @@ import { Provider } from '../../components/HOC/withProfile';
 import avatar from 'theme/assets/lisa';
 // Components
 import Feed from '../../components/Feed';
+import Catcher from '../../components/Catcher';
 
-@hot(module)
-export default class App extends Component {
+@hot(module) class App extends Component {
     render() {
-    	const options = {
-    avatar,
-    currentUserFirstName: 'Lisa',
-    currentUserLastName: 'Simpson'
-}
+        const options = {
+            avatar,
+            currentUserFirstName: 'Сергей',
+            currentUserLastName:  'Зелик',
+        };
+
         return (
-           <Provider value = { options }>
-            <Feed />
-           </Provider>
+            <Catcher>
+                <Provider value = { options }>
+                    <Feed />
+                </Provider>
+            </Catcher>
+
         );
     }
 }
+
+export default App;
