@@ -19,8 +19,8 @@ import moment from 'moment';
     };
 
     _removePost = () => {
-        const { id } = this.props;
-        this.props._removePost(id);
+        const { id,  _removePost} = this.props;
+        _removePost(id);
     };
 
     _getCross = () => {
@@ -30,7 +30,6 @@ import moment from 'moment';
             ? (<span
                 className = { Styles.cross }
                 onClick = { this._removePost }
-
             />) : null;
     };
 
