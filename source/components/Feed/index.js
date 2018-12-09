@@ -4,12 +4,15 @@ import React, { Component } from 'react';
 import Styles from './styles.m.css';
 import { api, TOKEN, GROUP_ID } from 'config/api';
 import { socket } from 'socket/init';
+import { Transition } from 'react-transition-group';
+import { fromTo } from 'gsap';
 // Components
 import Catcher from '../../components/Catcher';
 import Spinner from '../Spinner';
 import StatusBar from '../StatusBar';
 import Composer from '../Composer';
 import Post from '../Post';
+import Postman from '../Postman';
 import { withProfile } from '../HOC/withProfile';
 
 
@@ -17,6 +20,7 @@ import { withProfile } from '../HOC/withProfile';
         state = {
             posts:      [],
             isSpinning: false,
+            postman:    true,
         };
 
         componentDidMount = () => {
@@ -49,6 +53,8 @@ import { withProfile } from '../HOC/withProfile';
                     }));
                 }
             });
+
+            this._timeOutOfPostman();
         }
 
         componentWillUnmount = () => {
@@ -128,8 +134,32 @@ import { withProfile } from '../HOC/withProfile';
             }));
         }
 
+        _animateComposerEnter = (composer) => {
+            fromTo(composer, 1,
+                { opacity: 0, rotationX: 50 },
+                { opacity: 1, rotationX: 0 });
+        }
+
+        _animatePostmanEnter = (postman) => {
+            fromTo(postman, 1,
+                { opacity: 0, x: 100 },
+                { opacity: 1, x: 0 });
+        }
+
+        _animatePostmanExit = (postman) => {
+            fromTo(postman, 1,
+                { opacity: 1, x: 0 },
+                { opacity: 0, x: 100 });
+        }
+
+        _timeOutOfPostman = () => {
+            setTimeout(() => {
+                this.setState({ postman: false });
+            }, 4000);
+        }
+
         render () {
-            const { posts, isSpinning } = this.state;
+            const { posts, isSpinning, postman } = this.state;
             const postJSX = posts.map((post) => {
                 return (
                     <Catcher  key = { post.id }>
@@ -146,7 +176,21 @@ import { withProfile } from '../HOC/withProfile';
                 <section className = { Styles.feed }>
                     <Spinner isSpinning = { isSpinning }/>
                     <StatusBar />
-                    <Composer _createPost = { this._createPost } />
+                    <Transition
+                        appear
+                        in
+                        timeout = { 1000 }
+                        onEnter = { this._animateComposerEnter }>
+                        <Composer _createPost = { this._createPost } />
+                    </Transition>
+                    <Transition
+                        appear
+                        in = { postman }
+                        timeout = { 1000 }
+                        onEnter = { this._animatePostmanEnter }
+                        onExit = { this._animatePostmanExit } >
+                        <Postman />
+                    </Transition>
                     { postJSX }
                 </section>
             );

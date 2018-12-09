@@ -4,6 +4,8 @@ import cx from 'classnames';
 import Styles from './styles.m.css';
 import { withProfile } from '../HOC/withProfile';
 import { socket } from 'socket/init';
+import { Transition } from 'react-transition-group';
+import { fromTo } from 'gsap';
 
 @withProfile class StatusBar extends Component {
     state = {
@@ -28,6 +30,12 @@ import { socket } from 'socket/init';
         socket.removeListener('disconnect');
     }
 
+    _animateStatusBarEnter = (statusbar) => {
+        fromTo(statusbar, 1,
+            { opacity: 0 },
+            { opacity: 1 });
+    }
+
     render () {
         const { avatar, currentUserFirstName, currentUserLastName } = this.props;
         const { online } = this.state;
@@ -38,20 +46,26 @@ import { socket } from 'socket/init';
         const statusMessage = online ? 'Online' : 'Offline';
 
         return (
-            <section className = { Styles.statusBar }>
-                <div className = { statusStyle }>
-                    <div>
-                        { statusMessage }
+            <Transition
+                appear
+                in
+                timeout = { 1000 }
+                onEnter = { this._animateStatusBarEnter }>
+                <section className = { Styles.statusBar }>
+                    <div className = { statusStyle }>
+                        <div>
+                            { statusMessage }
+                        </div>
+                        <span />
                     </div>
-                    <span />
-                </div>
-                <button>
-                    <img src = { avatar }/>
-                    <span>{ currentUserFirstName }</span>
-                &nbsp;
-                    <span>{ currentUserLastName }</span>
-                </button>
-            </section>
+                    <button>
+                        <img src = { avatar }/>
+                        <span>{ currentUserFirstName }</span>
+                        &nbsp;
+                        <span>{ currentUserLastName }</span>
+                    </button>
+                </section>
+            </Transition>
         );
     }
 }
