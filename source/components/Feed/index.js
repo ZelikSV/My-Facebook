@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Styles from './styles.m.css';
 import { api, TOKEN, GROUP_ID } from 'config/api';
 import { socket } from 'socket/init';
-import { Transition } from 'react-transition-group';
+import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
 import { fromTo } from 'gsap';
 // Components
 import Catcher from '../../components/Catcher';
@@ -162,13 +162,27 @@ import { withProfile } from '../HOC/withProfile';
             const { posts, isSpinning, postman } = this.state;
             const postJSX = posts.map((post) => {
                 return (
-                    <Catcher  key = { post.id }>
-                        <Post
-                            { ...post }
-                            _likePost = { this._likePost }
-                            _removePost = { this._removePost }
-                        />
-                    </Catcher>
+                    <CSSTransition
+                        classNames = {{
+                            enter:       Styles.postInStart,
+                            enterActive: Styles.postInEnd,
+                            exitActive:  Styles.postOutEnd,
+                            exit:        Styles.postOutStart,
+
+                        }}
+                        key = { post.id }
+                        timeout = {{
+                            enter: 500,
+                            exit:  400,
+                        }}>
+                        <Catcher  >
+                            <Post
+                                { ...post }
+                                _likePost = { this._likePost }
+                                _removePost = { this._removePost }
+                            />
+                        </Catcher>
+                    </CSSTransition>
                 );
             });
 
@@ -191,7 +205,9 @@ import { withProfile } from '../HOC/withProfile';
                         onExit = { this._animatePostmanExit } >
                         <Postman />
                     </Transition>
-                    { postJSX }
+                    <TransitionGroup>
+                        { postJSX }
+                    </TransitionGroup>
                 </section>
             );
         }
