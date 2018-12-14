@@ -13,6 +13,7 @@ import StatusBar from '../StatusBar';
 import Composer from '../Composer';
 import Post from '../Post';
 import Postman from '../Postman';
+import Counter from '../Counter';
 import { withProfile } from '../HOC/withProfile';
 
 
@@ -205,6 +206,7 @@ import { withProfile } from '../HOC/withProfile';
                         onExit = { this._animatePostmanExit } >
                         <Postman />
                     </Transition>
+                    <Counter count = { postJSX.length }/>
                     <TransitionGroup>
                         { postJSX }
                     </TransitionGroup>
