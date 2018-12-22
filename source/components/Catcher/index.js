@@ -9,6 +9,7 @@ export default class Catcher extends Component {
     static propTypes = {
         children: object.isRequired,
     };
+
     state = {
         error: false,
     };

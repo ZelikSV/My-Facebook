@@ -6,6 +6,7 @@ import { withProfile } from '../HOC/withProfile';
 import { socket } from 'socket/init';
 import { Transition } from 'react-transition-group';
 import { fromTo } from 'gsap';
+import { Link } from 'react-router-dom';
 
 @withProfile class StatusBar extends Component {
     state = {
@@ -37,7 +38,7 @@ import { fromTo } from 'gsap';
     }
 
     render () {
-        const { avatar, currentUserFirstName, currentUserLastName } = this.props;
+        const { avatar, currentUserFirstName } = this.props;
         const { online } = this.state;
         const statusStyle = cx(Styles.status, {
             [ Styles.online ]:  online,
@@ -58,12 +59,12 @@ import { fromTo } from 'gsap';
                         </div>
                         <span />
                     </div>
-                    <button>
+                    <Link to = '/profile'>
                         <img src = { avatar }/>
                         <span>{ currentUserFirstName }</span>
-                        &nbsp;
-                        <span>{ currentUserLastName }</span>
-                    </button>
+                    </Link>
+                    <Link to = '/feed'>Feed</Link>
+                    <Link to = '/login'>Exit</Link>
                 </section>
             </Transition>
         );
