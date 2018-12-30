@@ -9,7 +9,8 @@
     border-bottom: #29487d;
     background-color: #4267b2;
 
-    & a {
+    & a,
+    & button {
         display: flex;
         align-items: center;
         justify-content: center;

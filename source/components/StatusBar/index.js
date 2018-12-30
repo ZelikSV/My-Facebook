@@ -30,7 +30,9 @@ import { Link } from 'react-router-dom';
         socket.removeListener('connect');
         socket.removeListener('disconnect');
     }
-
+    _loginOut = () => {
+        this.props._loginOut();
+    }
     _animateStatusBarEnter = (statusbar) => {
         fromTo(statusbar, 1,
             { opacity: 0 },
@@ -64,7 +66,7 @@ import { Link } from 'react-router-dom';
                         <span>{ currentUserFirstName }</span>
                     </Link>
                     <Link to = '/feed'>Feed</Link>
-                    <Link to = '/login'>Exit</Link>
+                    <button onClick = { this._loginOut } >Exit</button>
                 </section>
             </Transition>
         );

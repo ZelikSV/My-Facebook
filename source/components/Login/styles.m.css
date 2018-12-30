@@ -27,7 +27,7 @@
         border-radius: 50%;
     }
 
-        & a {
+        & button {
         width: 125px;
         line-height: 40px;
         transition: background-color .2s ease-in;

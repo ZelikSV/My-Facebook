@@ -13,22 +13,46 @@ import Profile from '../../components/Profile';
 import Catcher from '../../components/Catcher';
 
 @hot(module) class App extends Component {
+    state = {
+        isAutontification: false,
+        avatar,
+        currentUserFirstName: 'Сергей',
+        currentUserLastName:  'Зелик',
+    }
+
+    _login = () => {
+        this.setState({
+            isAutontification: true,
+        });
+    }
+
+    _loginOut = () => {
+        this.setState({
+            isAutontification: false,
+        });
+    }
+
     render() {
-        const options = {
-            avatar,
-            currentUserFirstName: 'Сергей',
-            currentUserLastName:  'Зелик',
-        };
+        const { isAutontification } = this.state;
 
         return (
             <Catcher>
-                <Provider value = { options }>
-                    <StatusBar />
+                <Provider value = { this.state }>
+                    <StatusBar _loginOut = { this._loginOut } />
                     <Switch>
                         <Route
-                            component = { Login }
                             path = '/login'
+                            render = { (props) => {
+                                return(
+                                    <Login
+                                    _login = { this._login }
+                                    { ...props }
+                                />
+                                    );
+                            } 
+                            }
                         />
+                        { !isAutontification && <Redirect to = '/login' />}
                         <Route
                             component = { Feed }
                             path = '/feed'
@@ -37,7 +61,7 @@ import Catcher from '../../components/Catcher';
                             component = { Profile }
                             path = '/profile'
                         />
-                        <Redirect to = '/login' />
+                        <Redirect to = '/feed' />
                     </Switch>
                 </Provider>
             </Catcher>
